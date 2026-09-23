@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ft_strlengh(char *string)
+int ft_strlen(char *string)
 {
     int i;
 
@@ -13,80 +13,83 @@ int ft_strlengh(char *string)
     return (i);
 }
 
+int ft_totalsize (int size, char **string)
+{
+    int totalsize;
+    // i = mot
+    int i;
+
+    totalsize = 0;
+    i = 0;
+    while (i < size)
+    {
+        totalsize = totalsize + ft_strlen(string[i]);
+        i++;
+    }
+return (totalsize);
+}
+    
 char *ft_strjoin(int size, char **strs, char *sep)
 {
     int i;
-    int j;
-    //size1 c'est la taille de chaque mot (donc la taille de *strs)
-    int size1;
-     //size1 c'est la taille de chaque separateur (donc la taille de *sep)
-    int size2;
     char *result;
-    int taillem;
-    int tailles;
     int taille;
-
+    // j = pour avancer dans le mot
+    int j;
+    int k;
     i = 0;
-    j = 0;
-    size1 = size;
-    size2 = size - 1;
-    taillem = 0;
-    tailles = 0;
+    j= 0;
+    k = 0;
 
-    while (size1 > 0)
+    if (size == 0)
     {
-        taillem = taillem + ft_strlengh(strs[size1 - 1]);
-        size1--;
+        result = malloc (sizeof(char));
+        if (result == NULL)
+            {
+                return (NULL);
+            result[0] = '\0';
+            return (result); 
+            }           
     }
-
-    while (size2 > 0)
-    {
-        tailles = tailles + ft_strlengh(sep);
-        size2--;
-    }
-
-    taille = taillem + tailles;
-
+    else
+    taille = ft_totalsize(size, strs) + ((size - 1) * ft_strlen (sep));
+  
     result = malloc(sizeof(char) * (taille + 1));
     if (result == NULL)
         return (NULL);
 
-    i = 0;
-    j = 0;
-
     while (i < size)
     {
-        size1 = 0;
-        while (strs[i][size1])
+        while (strs[i][j])
         {
-            result[j] = strs[i][size1];
-            j++;
-            size1++;
+            result[k] = strs[i][j];
+        j++;
+        k++;
         }
-
         if (i < size - 1)
         {
-            size1 = 0;
-            while (sep[size1])
+            j = 0;
+            while (sep[j])
             {
-                result[j] = sep[size1];
-                j++;
-                size1++;
+                result[k] = sep[j];
+            j++;
+            k++;
             }
         }
-        i++;
+    j = 0;
+    i++;
     }
 
-    result[j] = '\0';
+    result[k] = '\0';
     return (result);
 }
 
 int main(void)
 {
-    char *strs[] = {"bonjour", "toi"};
+    char *strs[] = {"je", "vais", "bien"};
     char *result;
 
-    result = ft_strjoin(2, strs, " ");
+    result = ft_strjoin(3, strs, "-*-");
 
     printf("%s\n", result);
 

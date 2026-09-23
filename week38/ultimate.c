@@ -17,7 +17,8 @@ int ft_ultimate_range(int **range, int min, int max)
     int taille;
 
     if(min >= max)
-    {
+    {       
+            *range = NULL;
             return(0);
     }
 
@@ -34,7 +35,7 @@ int ft_ultimate_range(int **range, int min, int max)
         {  
             (*range)[i] = min;
             i++;    
-            min =min +1;
+            min = min +1;
         }
     
     return(i);
@@ -51,7 +52,11 @@ int main(void)
     int i;
     i = 0;
     //printf("%d\n", ft_taille(20,15));
-    printf("%d\n",ft_ultimate_range(&str, 20, 10));
-   
+    printf("size %d\n",ft_ultimate_range(&str, -2, 4));
+   while (i < (4 - -2))
+   {
+    printf("%d\n",str[i]);
+    i++;
+   }
     return(0);
 }
